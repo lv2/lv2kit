@@ -31,8 +31,7 @@ test:arm_dbg:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test --wrapper=qemu-arm
-  dependencies:
-    - arm_dbg
+  needs: ["arm_dbg"]
   variables:
     LD_LIBRARY_PATH: "/usr/arm-linux-gnueabihf/lib/"
 
@@ -49,8 +48,7 @@ test:arm_rel:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test --wrapper=qemu-arm
-  dependencies:
-    - arm_rel
+  needs: ["arm_rel"]
   variables:
     LD_LIBRARY_PATH: "/usr/arm-linux-gnueabihf/lib/"
 
@@ -67,8 +65,7 @@ test:aarch64_dbg:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test --wrapper=qemu-aarch64
-  dependencies:
-    - aarch64_dbg
+  needs: ["aarch64_dbg"]
   variables:
     LD_LIBRARY_PATH: "/usr/aarch64-linux-gnu/lib/"
 
@@ -85,8 +82,7 @@ test:aarch64_rel:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test --wrapper=qemu-aarch64
-  dependencies:
-    - aarch64_rel
+  needs: ["aarch64_rel"]
   variables:
     LD_LIBRARY_PATH: "/usr/aarch64-linux-gnu/lib/"
 
@@ -100,8 +96,7 @@ test:amd64_dbg:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test
-  dependencies:
-    - amd64_dbg
+  needs: ["amd64_dbg"]
 
 
 amd64_rel:
@@ -113,8 +108,7 @@ test:amd64_rel:
   <<: *test_definition
   image: drobilla/debian-stretch
   script: python ./waf test
-  dependencies:
-    - amd64_rel
+  needs: ["amd64_rel"]
 
 
 mingw32_dbg:
@@ -160,8 +154,7 @@ mac_dbg:
 test:mac_dbg:
   <<: *test_definition
   script: python ./waf test
-  dependencies:
-    - mac_dbg
+  needs: ["mac_dbg"]
   tags:
     - macos
 
@@ -175,8 +168,7 @@ mac_rel:
 test:mac_rel:
   <<: *test_definition
   script: python ./waf test
-  dependencies:
-    - mac_rel
+  needs: ["mac_rel"]
   tags:
     - macos
 
@@ -191,8 +183,7 @@ win_dbg:
 test:win_dbg:
   <<: *test_definition
   script: python ./waf test
-  dependencies:
-    - win_dbg
+  needs: ["win_dbg"]
   tags:
     - windows
 
@@ -206,7 +197,6 @@ win_rel:
 test:win_rel:
   <<: *test_definition
   script: python ./waf test
-  dependencies:
-    - win_rel
+  needs: ["win_rel"]
   tags:
     - windows
