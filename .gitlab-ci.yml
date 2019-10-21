@@ -18,7 +18,7 @@ variables:
 arm32_dbg:
   <<: *build_definition
   image: lv2plugin/debian-arm32
-  script: python ./waf configure build -dsT
+  script: python ./waf configure build -dsT --no-bindings
   variables:
     CC: "arm-linux-gnueabihf-gcc"
     CXX: "arm-linux-gnueabihf-g++"
@@ -33,7 +33,7 @@ test:arm32_dbg:
 arm32_rel:
   <<: *build_definition
   image: lv2plugin/debian-arm32
-  script: python ./waf configure build -sT
+  script: python ./waf configure build -sT --no-bindings
   variables:
     CC: "arm-linux-gnueabihf-gcc"
     CXX: "arm-linux-gnueabihf-g++"
@@ -48,7 +48,7 @@ test:arm32_rel:
 arm64_dbg:
   <<: *build_definition
   image: lv2plugin/debian-arm64
-  script: python ./waf configure build -dsT
+  script: python ./waf configure build -dsT --no-bindings
   variables:
     CC: "aarch64-linux-gnu-gcc"
     CXX: "aarch64-linux-gnu-g++"
@@ -63,7 +63,7 @@ test:arm64_dbg:
 arm64_rel:
   <<: *build_definition
   image: lv2plugin/debian-arm64
-  script: python ./waf configure build -sT
+  script: python ./waf configure build -sT --no-bindings
   variables:
     CC: "aarch64-linux-gnu-gcc"
     CXX: "aarch64-linux-gnu-g++"
