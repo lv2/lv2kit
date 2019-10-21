@@ -63,6 +63,8 @@ def build(bld):
         bld.recurse(i)
 
 
-def test(ctx):
-    for i in ctx.env.LV2KIT_BUILD:
-        ctx.recurse(i, mandatory=False)
+def test(tst):
+    srcdir = tst.path.abspath()
+    os.putenv('LV2_PATH', os.path.join(tst.path.abspath(), 'libs', 'lv2', 'lv2'))
+    for i in tst.env.LV2KIT_BUILD:
+        tst.recurse(i, mandatory=False)
