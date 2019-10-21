@@ -27,7 +27,7 @@ test:arm32_dbg:
   <<: *test_definition
   image: lv2plugin/debian-arm32
   script: python ./waf test --wrapper=qemu-arm
-  needs: ["arm_dbg"]
+  needs: ["arm32_dbg"]
 
 
 arm32_rel:
@@ -42,7 +42,7 @@ test:arm32_rel:
   <<: *test_definition
   image: lv2plugin/debian-arm32
   script: python ./waf test --wrapper=qemu-arm
-  needs: ["arm_rel"]
+  needs: ["arm32_rel"]
 
 
 arm64_dbg:
