@@ -64,7 +64,5 @@ def build(bld):
 
 
 def test(tst):
-    srcdir = tst.path.abspath()
-    os.putenv('LV2_PATH', os.path.join(tst.path.abspath(), 'libs', 'lv2', 'lv2'))
     for i in tst.env.LV2KIT_BUILD:
         tst.recurse(i, mandatory=False)
