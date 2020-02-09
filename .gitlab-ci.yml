@@ -11,8 +11,7 @@ variables:
 .test_template: &test_definition
   stage: test
   artifacts:
-    paths:
-      - build/coverage
+    paths: [build/coverage]
 
 
 arm32_dbg:
@@ -136,55 +135,47 @@ mingw64_rel:
 mac_dbg:
   <<: *build_definition
   script: python ./waf configure build -dsT --no-coverage
-  tags:
-    - macos
+  tags: [macos]
 
 test:mac_dbg:
   <<: *test_definition
   script: python ./waf test
   needs: ["mac_dbg"]
-  tags:
-    - macos
+  tags: [macos]
 
 
 mac_rel:
   <<: *build_definition
   script: python ./waf configure build -sT --no-coverage
-  tags:
-    - macos
+  tags: [macos]
 
 test:mac_rel:
   <<: *test_definition
   script: python ./waf test
   needs: ["mac_rel"]
-  tags:
-    - macos
+  tags: [macos]
 
 
 win_dbg:
   <<: *build_definition
   script:
     - python ./waf configure build -dT --no-coverage
-  tags:
-    - windows
+  tags: [windows]
 
 test:win_dbg:
   <<: *test_definition
   script: python ./waf test
   needs: ["win_dbg"]
-  tags:
-    - windows
+  tags: [windows]
 
 
 win_rel:
   <<: *build_definition
   script: python ./waf configure build -T --no-coverage
-  tags:
-    - windows
+  tags: [windows]
 
 test:win_rel:
   <<: *test_definition
   script: python ./waf test
   needs: ["win_rel"]
-  tags:
-    - windows
+  tags: [windows]
