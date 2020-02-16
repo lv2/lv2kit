@@ -66,3 +66,7 @@ def build(bld):
 def test(tst):
     for i in tst.env.LV2KIT_BUILD:
         tst.recurse(i, mandatory=False)
+
+
+def dist(ctx):
+    ctx.archive()
