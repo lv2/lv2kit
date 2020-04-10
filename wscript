@@ -62,6 +62,17 @@ def build(bld):
         bld.add_group()
         bld.recurse(i)
 
+    if bld.env.DOCS:
+        bld(features       = 'subst',
+            source         = 'doc/reference.doxygen.in',
+            target         = 'doc/reference.doxygen',
+            install_path   = '',
+            LV2KIT_VERSION = VERSION,
+            LV2KIT_SRCDIR  = os.path.abspath(bld.path.srcpath()))
+
+        bld(features = 'doxygen',
+            doxyfile = 'doc/reference.doxygen')
+
 
 def test(tst):
     for i in tst.env.LV2KIT_BUILD:
