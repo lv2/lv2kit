@@ -13,7 +13,7 @@ out = 'build'       # Build directory
 
 line_just = 42
 projects = list(map(lambda x: os.path.join('libs', x),
-                    ['lv2', 'serd', 'sord', 'sratom', 'suil', 'lilv']))
+                    ['serd', 'sord', 'lv2', 'sratom', 'suil', 'lilv']))
 
 
 def options(opt):
