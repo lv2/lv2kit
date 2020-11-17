@@ -799,7 +799,7 @@ WARN_LOGFILE           =
 
 INPUT                  = @LV2KIT_SRCDIR@/doc/mainpage.md \
                          @LV2KIT_SRCDIR@/libs/lv2/lv2/ \
-                         @LV2KIT_SRCDIR@/libs/serd/serd/ \
+                         @LV2KIT_SRCDIR@/libs/serd/include/serd/ \
                          @LV2KIT_SRCDIR@/libs/sord/sord/ \
                          @LV2KIT_SRCDIR@/libs/sratom/sratom/ \
                          @LV2KIT_SRCDIR@/libs/suil/suil/ \
