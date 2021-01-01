@@ -33,6 +33,9 @@ def configure(conf):
     conf.load('lv2', cache=True)
     conf.load('autowaf', cache=True)
 
+    if not autowaf.set_c_lang(conf, 'c11', mandatory=False):
+        autowaf.set_c_lang(conf, 'c99')
+
     conf.env.LV2KIT_BUILD = []
     for p in projects:
         try:
