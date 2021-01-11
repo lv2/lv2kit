@@ -1,21 +1,21 @@
 [submodule "serd"]
-	path = libs/serd
+	path = subprojects/serd
 	url = ../../drobilla/serd.git
 [submodule "lv2"]
-	path = libs/lv2
+	path = subprojects/lv2
 	url = ../lv2.git
 [submodule "lilv"]
-	path = libs/lilv
+	path = subprojects/lilv
 	url = ../lilv.git
 [submodule "sratom"]
-	path = libs/sratom
+	path = subprojects/sratom
 	url = ../sratom.git
 [submodule "suil"]
-	path = libs/suil
+	path = subprojects/suil
 	url = ../suil.git
 [submodule "waflib"]
 	path = waflib
 	url = ../../drobilla/autowaf.git
 [submodule "sord"]
-	path = libs/sord
+	path = subprojects/sord
 	url = ../../drobilla/sord.git

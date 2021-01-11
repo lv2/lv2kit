@@ -12,7 +12,7 @@ top = '.'           # Source directory
 out = 'build'       # Build directory
 
 line_just = 42
-projects = list(map(lambda x: os.path.join('libs', x),
+projects = list(map(lambda x: os.path.join('subprojects', x),
                     ['serd', 'sord', 'lv2', 'sratom', 'suil', 'lilv']))
 
 
