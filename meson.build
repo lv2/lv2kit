@@ -48,6 +48,10 @@ pkg.generate(
   description: 'LV2 plugin SDK',
   requires: ['serd-0', 'sord-0', 'lv2', 'sratom-0', 'lilv-0', 'suil-0'])
 
+if not get_option('docs').disabled()
+  subdir('doc')
+endif
+
 # Print configuration summary
 if meson.version().version_compare('>=0.53.0')
   summary('Tests', get_option('tests'), bool_yn: true)

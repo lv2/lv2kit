@@ -13,12 +13,3 @@
 [submodule "suil"]
 	path = subprojects/suil
 	url = ../suil.git
-[submodule "sord"]
-	path = subprojects/sord
-	url = ../../drobilla/sord.git
-[submodule "subprojects/exess"]
-	path = subprojects/exess
-	url = git@gitlab.com:drobilla/exess.git
-[submodule "subprojects/rerex"]
-	path = subprojects/rerex
-	url = git@gitlab.com:drobilla/rerex.git
