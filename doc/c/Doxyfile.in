@@ -1,0 +1,45 @@
+PROJECT_NAME           = LV2kit
+PROJECT_BRIEF          = "LV2 plugin and host SDK"
+
+QUIET                  = YES
+WARN_AS_ERROR          = NO
+WARN_IF_UNDOCUMENTED   = NO
+WARN_NO_PARAMDOC       = NO
+
+JAVADOC_AUTOBRIEF      = YES
+
+CASE_SENSE_NAMES       = YES
+HIDE_IN_BODY_DOCS      = YES
+REFERENCES_LINK_SOURCE = NO
+
+GENERATE_HTML          = NO
+GENERATE_LATEX         = NO
+GENERATE_XML           = YES
+XML_PROGRAMLISTING     = NO
+SHOW_FILES             = NO
+
+MACRO_EXPANSION        = YES
+PREDEFINED             = LV2KIT_API \
+                         LILV_API \
+                         LILV_DEPRECATED \
+                         SERD_ALLOCATED \
+                         SERD_API \
+                         SERD_CONST_FUNC= \
+                         SERD_DEPRECATED_BY(x)= \
+                         SERD_DISABLE_DEPRECATED \
+                         SERD_NONNULL= \
+                         SERD_NULLABLE= \
+                         SERD_PURE_FUNC= \
+                         SRATOM_API \
+                         SUIL_API
+
+RECURSIVE              = YES
+STRIP_FROM_PATH        = @LV2KIT_SRCDIR@
+INPUT                  = \
+    @LV2KIT_SRCDIR@/subprojects/lilv/include \
+    @LV2KIT_SRCDIR@/subprojects/serd/include \
+    @LV2KIT_SRCDIR@/subprojects/sratom/include \
+    @LV2KIT_SRCDIR@/subprojects/suil/include \
+    @LV2KIT_SRCDIR@/subprojects/serd/subprojects/exess/include
+
+OUTPUT_DIRECTORY       = @DOX_OUTPUT@

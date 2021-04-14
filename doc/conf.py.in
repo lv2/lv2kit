@@ -1,0 +1,116 @@
+# Project information
+
+project = "LV2Kit"
+copyright = "2021, David Robillard"
+author = "David Robillard"
+release = "@LV2KIT_VERSION@"
+
+# General configuration
+
+exclude_patterns = ["xml"]
+language = "en"
+nitpicky = True
+pygments_style = "friendly"
+
+# Ignore everything opaque or external for nitpicky mode
+_opaque = [
+    "FILE",
+    "LV2_Atom",
+    "LV2_Atom_Forge",
+    "LV2_Atom_Forge_Ref",
+    "LV2_Atom_Forge_Sink_Handle",
+    "LV2_Descriptor",
+    "LV2_Feature",
+    "LV2_Handle",
+    "LV2_URID",
+    "LV2_URID_Map",
+    "LV2_URID_Unmap",
+    "LilvInstanceImpl",
+    "LilvNodeImpl",
+    "LilvPluginClassImpl",
+    "LilvPluginImpl",
+    "LilvPortImpl",
+    "LilvScalePointImpl",
+    "LilvStateImpl",
+    "LilvUIImpl",
+    "LilvWorldImpl",
+    "SerdByteSinkImpl",
+    "SerdByteSourceImpl",
+    "SerdCursorImpl",
+    "SerdEnv",
+    "SerdEnvImpl",
+    "SerdIterImpl",
+    "SerdModel",
+    "SerdModelImpl",
+    "SerdNode",
+    "SerdNodeImpl",
+    "SerdNodesImpl",
+    "SerdRangeImpl",
+    "SerdReaderImpl",
+    "SerdSink",
+    "SerdSinkImpl",
+    "SerdStatementImpl",
+    "SerdValidatorImpl",
+    "SerdWorld",
+    "SerdWorldImpl",
+    "SerdWriterImpl",
+    "SratomDumperImpl",
+    "SratomLoaderImpl",
+    "SuilHostImpl",
+    "SuilInstanceImpl",
+    "int16_t",
+    "int32_t",
+    "int64_t",
+    "int8_t",
+    "size_t",
+    "uint16_t",
+    "uint32_t",
+    "uint64_t",
+    "uint8_t",
+    "uintptr_t",
+    "va_list",
+]
+
+nitpick_ignore = list(map(lambda x: ("c:identifier", x), _opaque))
+
+# HTML output
+
+html_copy_source = False
+html_short_title = "LV2Kit"
+html_theme = "sphinx_lv2_theme"
+
+if tags.has("singlehtml"):
+    html_sidebars = {
+        "**": [
+            "globaltoc.html",
+        ]
+    }
+
+    html_theme_options = {
+        "body_max_width": "48em",
+        "body_min_width": "48em",
+        "description": "LV2 plugin and host SDK",
+        "globaltoc_collapse": False,
+        "globaltoc_maxdepth": 3,
+        "logo_name": True,
+        "nosidebar": False,
+        "page_width": "80em",
+        "show_footer_version": True,
+        "show_logo_version": False,
+        "sidebar_width": "18em",
+    }
+
+else:
+    html_theme_options = {
+        "body_max_width": "60em",
+        "body_min_width": "40em",
+        "description": "LV2 plugin and host SDK",
+        "globaltoc_collapse": True,
+        "globaltoc_maxdepth": 1,
+        "logo_name": True,
+        "nosidebar": True,
+        "page_width": "60em",
+        "show_footer_version": True,
+        "show_logo_version": False,
+        "sidebar_width": "14em",
+    }
