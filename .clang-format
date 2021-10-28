@@ -34,6 +34,7 @@ StatementMacros:
   - _Pragma
 ForEachMacros:
   - FOREACH_MATCH
+  - FOREACH_PAT
   - LILV_FOREACH
   - LV2_ATOM_OBJECT_BODY_FOREACH
   - LV2_ATOM_OBJECT_FOREACH
