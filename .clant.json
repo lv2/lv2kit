@@ -5,7 +5,6 @@
     "libs/sratom/include"
   ],
   "mapping_files": [
-    ".includes.imp",
     "qt5_11.imp",
     "boost-1.64-all.imp",
     "boost-1.64-all-private.imp"
