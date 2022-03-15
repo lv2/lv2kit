@@ -147,16 +147,16 @@ win_rel:
     - meson setup build -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
 
-# pages:
-#   stage: deploy
-#   script:
-#     - mkdir public
-#     - mkdir public/c
-#     - mv build/doc/c/singlehtml/ public/c/singlehtml/
-#   dependencies:
-#     - x64_dbg
-#   artifacts:
-#     paths:
-#       - public
-#   only:
-#     - master
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - mkdir public/c
+    - mv build/doc/c/singlehtml/ public/c/singlehtml/
+  dependencies:
+    - x64_dbg
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
