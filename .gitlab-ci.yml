@@ -82,21 +82,19 @@ mingw32_dbg:
   <<: *build_definition
   image: lv2plugin/debian-mingw32
   script:
-    - meson setup build --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
   variables:
-    MESON_TESTTHREADS: "1"
-    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\8.3-win32"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32;Z:\\builds\\drobilla\\serd\\build;Z:\\builds\\drobilla\\serd\\build\\subprojects\\exess;Z:\\builds\\drobilla\\serd\\build\\subprojects\\zix;Z:\\builds\\drobilla\\serd\\build\\subprojects\\suil;Z:\\builds\\drobilla\\serd\\build\\subprojects\\sratom;Z:\\builds\\drobilla\\serd\\build\\subprojects\\lilv"
 
 mingw32_rel:
   <<: *build_definition
   image: lv2plugin/debian-mingw32
   script:
-    - meson setup build --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
   variables:
-    MESON_TESTTHREADS: "1"
-    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\8.3-win32"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32;Z:\\builds\\drobilla\\serd\\build;Z:\\builds\\drobilla\\serd\\build\\subprojects\\exess;Z:\\builds\\drobilla\\serd\\build\\subprojects\\zix;Z:\\builds\\drobilla\\serd\\build\\subprojects\\suil;Z:\\builds\\drobilla\\serd\\build\\subprojects\\sratom;Z:\\builds\\drobilla\\serd\\build\\subprojects\\lilv"
 
 
 mingw64_dbg:
@@ -106,7 +104,7 @@ mingw64_dbg:
     - meson setup build --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
   variables:
-    MESON_TESTTHREADS: "1"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32;Z:\\builds\\drobilla\\serd\\build;Z:\\builds\\drobilla\\serd\\build\\subprojects\\exess;Z:\\builds\\drobilla\\serd\\build\\subprojects\\zix;Z:\\builds\\drobilla\\serd\\build\\subprojects\\suil;Z:\\builds\\drobilla\\serd\\build\\subprojects\\sratom;Z:\\builds\\drobilla\\serd\\build\\subprojects\\lilv"
 
 mingw64_rel:
   <<: *build_definition
@@ -115,7 +113,7 @@ mingw64_rel:
     - meson setup build --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
   variables:
-    MESON_TESTTHREADS: "1"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32;Z:\\builds\\drobilla\\serd\\build;Z:\\builds\\drobilla\\serd\\build\\subprojects\\exess;Z:\\builds\\drobilla\\serd\\build\\subprojects\\zix;Z:\\builds\\drobilla\\serd\\build\\subprojects\\suil;Z:\\builds\\drobilla\\serd\\build\\subprojects\\sratom;Z:\\builds\\drobilla\\serd\\build\\subprojects\\lilv"
 
 
 mac_dbg:
