@@ -134,24 +134,24 @@ mingw64_rel:
 mac_dbg:
   <<: *build_definition
   script:
-    - python ./waf configure build test -dST --werror --no-coverage
+    - python ./waf configure build test -dST --werror --no-bindings --no-coverage
   tags: [macos]
 
 mac_rel:
   <<: *build_definition
   script:
-    - python ./waf configure build test -ST --werror --no-coverage
+    - python ./waf configure build test -ST --werror --no-bindings --no-coverage
   tags: [macos]
 
 
 win_dbg:
   <<: *build_definition
   script:
-    - python3 ./waf configure build test -dST --werror --no-coverage
+    - python3 ./waf configure build test -dST --werror --no-bindings --no-coverage
   tags: [windows,msvc,python]
 
 win_rel:
   <<: *build_definition
   script:
-    - python3 ./waf configure build test -ST --werror --no-coverage
+    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage
   tags: [windows,msvc,python]
