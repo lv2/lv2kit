@@ -147,11 +147,11 @@ mac_rel:
 win_dbg:
   <<: *build_definition
   script:
-    - python3 ./waf configure build test -dST --werror --no-bindings --no-coverage
+    - python ./waf configure build test -dST --werror --no-bindings --no-coverage
   tags: [windows,msvc,python]
 
 win_rel:
   <<: *build_definition
   script:
-    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage
+    - python ./waf configure build test -ST --werror --no-bindings --no-coverage
   tags: [windows,msvc,python]
