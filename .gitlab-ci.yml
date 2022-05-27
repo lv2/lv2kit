@@ -18,7 +18,7 @@ arm32_dbg:
   <<: *build_definition
   image: lv2plugin/debian-arm32
   script:
-    - python3 ./waf configure build test -v -ST --werror --no-bindings --no-coverage --wrapper=qemu-arm-static
+    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage --wrapper=qemu-arm-static
   variables:
     AR: "arm-linux-gnueabihf-ar"
     CC: "arm-linux-gnueabihf-gcc"
