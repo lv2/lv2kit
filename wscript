@@ -36,6 +36,8 @@ def configure(conf):
     if not autowaf.set_c_lang(conf, 'c11', mandatory=False):
         autowaf.set_c_lang(conf, 'c99')
 
+    autowaf.set_cxx_lang(conf, 'c++14')
+
     conf.env.LV2KIT_BUILD = []
     for p in projects:
         try:
