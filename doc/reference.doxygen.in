@@ -798,12 +798,12 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = @LV2KIT_SRCDIR@/doc/mainpage.md \
-                         @LV2KIT_SRCDIR@/libs/lv2/lv2/ \
-                         @LV2KIT_SRCDIR@/libs/serd/include/serd/ \
-                         @LV2KIT_SRCDIR@/libs/sord/include/sord/ \
-                         @LV2KIT_SRCDIR@/libs/sratom/include/sratom/ \
-                         @LV2KIT_SRCDIR@/libs/suil/include/suil/ \
-                         @LV2KIT_SRCDIR@/libs/lilv/include/lilv/
+                         @LV2KIT_SRCDIR@/subprojects/lv2/lv2/ \
+                         @LV2KIT_SRCDIR@/subprojects/serd/include/serd/ \
+                         @LV2KIT_SRCDIR@/subprojects/sord/include/sord/ \
+                         @LV2KIT_SRCDIR@/subprojects/sratom/include/sratom/ \
+                         @LV2KIT_SRCDIR@/subprojects/suil/include/suil/ \
+                         @LV2KIT_SRCDIR@/subprojects/lilv/include/lilv/
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
