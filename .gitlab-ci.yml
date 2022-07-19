@@ -1,157 +1,136 @@
-stages: [build]
-
 variables:
-  GIT_SUBMODULE_STRATEGY: normal
-
-.build_template: &build_definition
-  stage: build
-  artifacts:
-    paths: ["build/", ".lock-waf*"]
-
-.test_template: &test_definition
-  stage: test
-  artifacts:
-    paths: [build/coverage]
-
+  GIT_SUBMODULE_STRATEGY: recursive
 
 arm32_dbg:
-  <<: *build_definition
   image: lv2plugin/debian-arm32
   script:
-    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage --wrapper=qemu-arm-static
-  variables:
-    AR: "arm-linux-gnueabihf-ar"
-    CC: "arm-linux-gnueabihf-gcc"
-    CFLAGS: "-O0 -g -D_FILE_OFFSET_BITS=64"
-    CXX: "arm-linux-gnueabihf-g++"
-    CXXFLAGS: "-O0 -g -D_FILE_OFFSET_BITS=64"
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 arm32_rel:
-  <<: *build_definition
   image: lv2plugin/debian-arm32
   script:
-    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage --wrapper=qemu-arm-static
-  variables:
-    AR: "arm-linux-gnueabihf-ar"
-    CC: "arm-linux-gnueabihf-gcc"
-    CFLAGS: "-O2 -DNDEBUG -D_FILE_OFFSET_BITS=64"
-    CXX: "arm-linux-gnueabihf-g++"
-    CXXFLAGS: "-O2 -DNDEBUG -D_FILE_OFFSET_BITS=64"
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 
 arm64_dbg:
-  <<: *build_definition
   image: lv2plugin/debian-arm64
   script:
-    - python3 ./waf configure build test -dST --werror --no-bindings --no-coverage --wrapper=qemu-aarch64-static
-  variables:
-    AR: "aarch64-linux-gnu-ar"
-    CC: "aarch64-linux-gnu-gcc"
-    CXX: "aarch64-linux-gnu-g++"
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 arm64_rel:
-  <<: *build_definition
   image: lv2plugin/debian-arm64
   script:
-    - python3 ./waf configure build test -ST --werror --no-bindings --no-coverage --wrapper=qemu-aarch64-static
-  variables:
-    AR: "aarch64-linux-gnu-ar"
-    CC: "aarch64-linux-gnu-gcc"
-    CXX: "aarch64-linux-gnu-g++"
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 
 x64_dbg:
-  <<: *build_definition
   image: lv2plugin/debian-x64
   script:
-    - python3 ./waf configure build test -dST --werror
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true
+    - ninja -C build test
+  artifacts:
+    paths:
+      - build/doc
 
 x64_rel:
-  <<: *build_definition
   image: lv2plugin/debian-x64
   script:
-    - python3 ./waf configure build test -ST --werror
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
+
+
+x64_static:
+  image: lv2plugin/debian-x64
+  script:
+    - meson setup build --wrap-mode=forcefallback -Ddefault_library=static -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 
 x64_sanitize:
-  <<: *build_definition
   image: lv2plugin/debian-x64-clang
   script:
-    - python3 ./waf configure build test -ST --werror --no-coverage --no-bindings --no-coverage
+    - meson setup build --wrap-mode=forcefallback -Db_lundef=false -Dbuildtype=plain -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
   variables:
     CC: "clang"
-    CFLAGS: "-fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=unsigned-integer-overflow -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
     CXX: "clang++"
-    CXXFLAGS: "-fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=unsigned-integer-overflow -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
-    LINKFLAGS: "-fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=unsigned-integer-overflow -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
-
-
-# TODO: Run tests on MinGW
+    CFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
+    CXXFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
+    LDFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
 
 
 mingw32_dbg:
-  <<: *build_definition
   image: lv2plugin/debian-mingw32
   script:
-    - python3 ./waf configure build -dST --werror --no-coverage --wrapper=wine
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
   variables:
-    AR: "i686-w64-mingw32-ar"
-    CC: "i686-w64-mingw32-gcc"
-    CXX: "i686-w64-mingw32-g++"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32"
 
 mingw32_rel:
-  <<: *build_definition
   image: lv2plugin/debian-mingw32
   script:
-    - python3 ./waf configure build -ST --werror --no-coverage --wrapper=wine
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
   variables:
-    AR: "i686-w64-mingw32-ar"
-    CC: "i686-w64-mingw32-gcc"
-    CXX: "i686-w64-mingw32-g++"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32"
 
 
 mingw64_dbg:
-  <<: *build_definition
   image: lv2plugin/debian-mingw64
   script:
-    - python3 ./waf configure build -dST --werror --no-coverage --wrapper=wine
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
   variables:
-    AR: "x86_64-w64-mingw32-ar"
-    CC: "x86_64-w64-mingw32-gcc"
-    CXX: "x86_64-w64-mingw32-g++"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
 
 mingw64_rel:
-  <<: *build_definition
   image: lv2plugin/debian-mingw64
   script:
-    - python3 ./waf configure build -ST --werror --no-coverage --wrapper=wine
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
   variables:
-    AR: "x86_64-w64-mingw32-ar"
-    CC: "x86_64-w64-mingw32-gcc"
-    CXX: "x86_64-w64-mingw32-g++"
+    WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
+
+
+freebsd_dbg:
+  tags: [freebsd,meson]
+  script:
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - ninja -C build test
+
+freebsd_rel:
+  tags: [freebsd,meson]
+  script:
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - ninja -C build test
 
 
 mac_dbg:
-  <<: *build_definition
-  script:
-    - python ./waf configure build test -dST --werror --no-bindings --no-coverage
   tags: [macos]
+  script:
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 mac_rel:
-  <<: *build_definition
-  script:
-    - python ./waf configure build test -ST --werror --no-bindings --no-coverage
   tags: [macos]
+  script:
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 
 win_dbg:
-  <<: *build_definition
+  tags: [windows,meson]
   script:
-    - python ./waf configure build test -dST --werror --no-bindings --no-coverage
-  tags: [windows,msvc,python]
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
 
 win_rel:
-  <<: *build_definition
+  tags: [windows,meson]
   script:
-    - python ./waf configure build test -ST --werror --no-bindings --no-coverage
-  tags: [windows,msvc,python]
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
