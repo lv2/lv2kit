@@ -97,6 +97,15 @@ mingw64_rel:
     WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
 
 
+fedora:
+  image: lv2plugin/fedora-big
+  script:
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=plain -Dstrict=true -Dwerror=true
+    - ninja -C build test
+  variables:
+    CFLAGS: -O2 -D_FORTIFY_SOURCE=2
+
+
 freebsd_dbg:
   tags: [freebsd,meson]
   script:
