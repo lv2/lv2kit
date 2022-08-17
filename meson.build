@@ -37,19 +37,19 @@ endif
 serd_dep = dependency(
   'serd-0',
   fallback: ['serd', 'serd_dep'],
-  version: '>=0.30.9',
+  version: '>= 0.30.10',
 )
 
 sord_dep = dependency(
   'sord-0',
   fallback: ['sord', 'sord_dep'],
-  version: '>=0.16.9',
+  version: '>= 0.16.10',
 )
 
 lv2_dep = dependency(
   'lv2',
   fallback: ['lv2', 'lv2_dep'],
-  version: '>=1.18.2',
+  version: '>= 1.18.2',
 )
 
 ###############
