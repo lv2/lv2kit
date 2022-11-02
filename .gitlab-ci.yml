@@ -1,101 +1,46 @@
+# Copyright 2019-2022 David Robillard <d@drobilla.net>
+# SPDX-License-Identifier: 0BSD OR ISC
+
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
-arm32_dbg:
-  image: lv2plugin/debian-arm32
+default:
+  image: lv2plugin/debian-x64
   script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build -Dwerror=true
     - ninja -C build test
 
-arm32_rel:
-  image: lv2plugin/debian-arm32
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build test
-
-
-arm64_dbg:
-  image: lv2plugin/debian-arm64
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build test
-
-arm64_rel:
-  image: lv2plugin/debian-arm64
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build test
-
-
-x64_dbg:
+dev:
   image: lv2plugin/debian-x64
   script:
     - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true
+    - ninja -C build test
+    - meson configure -Dbuildtype=release -Db_coverage=false build
     - ninja -C build test
   artifacts:
     paths:
       - build/doc
 
-x64_rel:
+static:
   image: lv2plugin/debian-x64
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Ddefault_library=static -Dbuildtype=debug -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - ninja -C build test
+    - meson configure -Dbuildtype=release build
     - ninja -C build test
 
-
-x64_static:
-  image: lv2plugin/debian-x64
-  script:
-    - meson setup build --wrap-mode=forcefallback -Ddefault_library=static -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build test
-
-
-x64_sanitize:
+sanitize:
   image: lv2plugin/debian-x64-clang
   script:
-    - meson setup build --wrap-mode=forcefallback -Db_lundef=false -Dbuildtype=plain -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Db_lundef=false -Dbuildtype=plain -Dstrict=true -Dwerror=true -Dc_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dc_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dcpp_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Dcpp_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Ddocs=disabled
+    - ninja -C build test
+    - meson configure build -Dbuildtype=debugoptimized -Dc_args="" -Dc_link_args="" -Dcpp_args="" -Dcpp_link_args=""
+    - meson configure build -Db_sanitize=thread
     - ninja -C build test
   variables:
     CC: "clang"
-    CXX: "clang++"
-    CFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
-    CXXFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
-    LDFLAGS: "-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability"
 
-
-mingw32_dbg:
-  image: lv2plugin/debian-mingw32
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build
-  variables:
-    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32"
-
-mingw32_rel:
-  image: lv2plugin/debian-mingw32
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build
-  variables:
-    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32"
-
-
-mingw64_dbg:
-  image: lv2plugin/debian-mingw64
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build
-  variables:
-    WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
-
-mingw64_rel:
-  image: lv2plugin/debian-mingw64
-  script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
-    - ninja -C build
-  variables:
-    WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
-
+# Linux Distributions
 
 fedora:
   image: lv2plugin/fedora-big
@@ -105,41 +50,66 @@ fedora:
   variables:
     CFLAGS: -O2 -D_FORTIFY_SOURCE=2
 
+# Linux Platforms
 
-freebsd_dbg:
+arm32:
+  image: lv2plugin/debian-arm32
+  script:
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
+    - meson configure -Dbuildtype=release build
+    - ninja -C build test
+
+arm64:
+  image: lv2plugin/debian-arm64
+  script:
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build test
+    - meson configure -Dbuildtype=release build
+    - ninja -C build test
+
+mingw32:
+  image: lv2plugin/debian-mingw32
+  script:
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
+    - meson configure -Dbuildtype=release build
+    - ninja -C build test
+  variables:
+    WINEPATH: "Z:\\usr\\lib\\gcc\\i686-w64-mingw32\\10-win32"
+
+mingw64:
+  image: lv2plugin/debian-mingw64
+  script:
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - ninja -C build
+    - meson configure -Dbuildtype=release build
+    - ninja -C build test
+  variables:
+    WINEPATH: "Z:\\usr\\lib\\gcc\\x86_64-w64-mingw32\\8.3-win32"
+
+# Non-Linux/Docker rows (not hosted)
+
+freebsd:
   tags: [freebsd,meson]
   script:
     - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true -Ddocs=disabled
     - ninja -C build test
-
-freebsd_rel:
-  tags: [freebsd,meson]
-  script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - meson configure -Dbuildtype=release build
     - ninja -C build test
 
-
-mac_dbg:
+mac:
   tags: [macos]
   script:
     - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
-
-mac_rel:
-  tags: [macos]
-  script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson configure -Dbuildtype=release build
     - ninja -C build test
 
-
-win_dbg:
+win:
   tags: [windows,meson]
   script:
     - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
     - ninja -C build test
-
-win_rel:
-  tags: [windows,meson]
-  script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=release -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson configure -Dbuildtype=release build
     - ninja -C build test
