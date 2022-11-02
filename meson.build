@@ -6,7 +6,7 @@ project('lv2kit', ['c'],
           'b_ndebug=if-release',
           'buildtype=release',
           'c_std=c99',
-          'cpp_std=c++14',
+          'cpp_std=c++17',
         ])
 
 lv2kit_src_root = meson.current_source_dir()
@@ -34,23 +34,10 @@ endif
 # Dependencies #
 ################
 
-serd_dep = dependency(
-  'serd-0',
-  fallback: ['serd', 'serd_dep'],
-  version: '>= 0.30.10',
-)
-
-sord_dep = dependency(
-  'sord-0',
-  fallback: ['sord', 'sord_dep'],
-  version: '>= 0.16.10',
-)
-
-lv2_dep = dependency(
-  'lv2',
-  fallback: ['lv2', 'lv2_dep'],
-  version: '>= 1.18.2',
-)
+zix_dep = dependency('zix-0', fallback: 'zix', version: '>= 0.3.0')
+serd_dep = dependency('serd-0', fallback: 'serd', version: '>= 0.30.17')
+sord_dep = dependency('sord-0', fallback: 'sord', version: '>= 0.16.15')
+lv2_dep = dependency('lv2', fallback: 'lv2', version: '>= 1.18.2')
 
 ###############
 # Subprojects #
@@ -58,7 +45,8 @@ lv2_dep = dependency(
 
 sratom_dep = subproject('sratom').get_variable('sratom_dep')
 lilv_dep = subproject('lilv').get_variable('lilv_dep')
-suil_dep = subproject('suil').get_variable('suil_dep')
+suil_subproject = subproject('suil', default_options: ['cpp_std=c++17'])
+suil_dep = suil_subproject.get_variable('suil_dep')
 
 ###########
 # Package #
@@ -69,14 +57,22 @@ pkg.generate(
   description: 'LV2 host libraries',
   filebase: versioned_name,
   name: 'LV2Kit',
-  requires: ['serd-0', 'sord-0', 'lv2', 'sratom-0', 'lilv-0', 'suil-0'],
+  requires: ['zix-0', 'serd-0', 'sord-0', 'lv2', 'sratom-0', 'lilv-0', 'suil-0'],
   subdirs: [versioned_name],
   version: meson.project_version(),
 )
 
 # Declare dependency for internal meson dependants
 lv2kit_dep = declare_dependency(
-  dependencies: [serd_dep, sord_dep, lv2_dep, sratom_dep, lilv_dep, suil_dep],
+  dependencies: [
+    zix_dep,
+    serd_dep,
+    sord_dep,
+    lv2_dep,
+    sratom_dep,
+    lilv_dep,
+    suil_dep,
+  ],
 )
 
 # Print configuration summary
