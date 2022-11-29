@@ -17,6 +17,15 @@ dev:
     - ninja -C build test
     - meson configure -Dbuildtype=release -Db_coverage=false build
     - ninja -C build test
+    - mkdir -p build/doc/man
+    - cp subprojects/serd/doc/mandoc.css build/doc/man/
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/sord/doc/sord_validate.1 > build/doc/man/sord_validate.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/sord/doc/sordi.1 > build/doc/man/sordi.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/lilv/doc/lv2bench.1 > build/doc/man/lv2bench.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/lilv/doc/lv2apply.1 > build/doc/man/lv2apply.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/lilv/doc/lv2info.1 > build/doc/man/lv2info.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/lilv/doc/lv2ls.1 > build/doc/man/lv2ls.html
+    - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/serd/doc/serdi.1 > build/doc/man/serdi.html
   artifacts:
     paths:
       - build/doc
@@ -113,3 +122,18 @@ win:
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
+
+# Documentation
+
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - mv build/doc/man public/man
+  needs:
+    - dev
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
