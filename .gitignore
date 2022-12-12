@@ -1,1 +1,4 @@
 build/
+subprojects/packagecache/
+subprojects/sphinxygen-1.0.0/
+subprojects/sphinxygen.wrap
