@@ -1,3 +1,6 @@
+# Copyright 2022-2023 David Robillard <d@drobilla.net>
+# SPDX-License-Identifier: 0BSD OR ISC
+
 project('lv2kit', ['c'],
         version: '0.0.1',
         license: 'ISC',
