@@ -13,7 +13,7 @@ default:
 dev:
   image: lv2plugin/debian-x64
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dwarning_level=3 -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release -Db_coverage=false build
     - ninja -C build test
@@ -33,7 +33,7 @@ dev:
 static:
   image: lv2plugin/debian-x64
   script:
-    - meson setup build --wrap-mode=forcefallback -Ddefault_library=static -Dbuildtype=debug -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - meson setup build --wrap-mode=forcefallback -Ddefault_library=static -Dbuildtype=debug -Dwarning_level=3 -Dwerror=true -Ddocs=disabled
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -41,7 +41,7 @@ static:
 sanitize:
   image: lv2plugin/debian-x64-clang
   script:
-    - meson setup build --wrap-mode=forcefallback -Db_lundef=false -Dbuildtype=plain -Dstrict=true -Dwerror=true -Dc_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dc_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dcpp_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Dcpp_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Ddocs=disabled
+    - meson setup build --wrap-mode=forcefallback -Db_lundef=false -Dbuildtype=plain -Dwarning_level=3 -Dwerror=true -Dc_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dc_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero -fsanitize=implicit-conversion -fsanitize=local-bounds -fsanitize=nullability" -Dcpp_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Dcpp_link_args="-fno-sanitize-recover=all -fsanitize=address -fsanitize=undefined -fsanitize=float-divide-by-zero" -Ddocs=disabled
     - ninja -C build test
     - meson configure build -Dbuildtype=debugoptimized -Dc_args="" -Dc_link_args="" -Dcpp_args="" -Dcpp_link_args=""
     - meson configure build -Db_sanitize=thread
@@ -54,7 +54,7 @@ sanitize:
 fedora:
   image: lv2plugin/fedora-big
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=plain -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=plain -Dwarning_level=3 -Dwerror=true
     - ninja -C build test
   variables:
     CFLAGS: -O2 -D_FORTIFY_SOURCE=2
@@ -64,7 +64,7 @@ fedora:
 arm32:
   image: lv2plugin/debian-arm32
   script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/arm-linux-gnueabihf.ini -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=3 -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -72,7 +72,7 @@ arm32:
 arm64:
   image: lv2plugin/debian-arm64
   script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/aarch64-linux-gnu.ini -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=3 -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -80,7 +80,7 @@ arm64:
 mingw32:
   image: lv2plugin/debian-mingw32
   script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/i686-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled  -Dwarning_level=everything -Dwerror=true
     - ninja -C build
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -90,7 +90,7 @@ mingw32:
 mingw64:
   image: lv2plugin/debian-mingw64
   script:
-    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback --cross-file=/usr/share/meson/cross/x86_64-w64-mingw32.ini -Dc_args="-static-libgcc" -Dc_link_args="-static-libgcc" -Dcpp_args="-static-libgcc" -Dcpp_link_args="-static-libgcc" -Dbuildtype=debug -Ddocs=disabled  -Dwarning_level=everything -Dwerror=true
     - ninja -C build
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -102,7 +102,7 @@ mingw64:
 freebsd:
   tags: [freebsd,meson]
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dstrict=true -Dwerror=true -Ddocs=disabled
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Dwarning_level=3 -Dwerror=true -Ddocs=disabled
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -110,7 +110,7 @@ freebsd:
 mac:
   tags: [macos]
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=3 -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
@@ -118,7 +118,7 @@ mac:
 win:
   tags: [windows,meson]
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dstrict=true -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=everything -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test

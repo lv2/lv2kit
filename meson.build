@@ -28,11 +28,6 @@ if add_languages(['cpp'], native: false, required: get_option('cxx'))
   cpp = meson.get_compiler('cpp')
 endif
 
-# Set global warning flags
-if get_option('strict') and not meson.is_subproject()
-  subdir('meson/warnings')
-endif
-
 ################
 # Dependencies #
 ################
