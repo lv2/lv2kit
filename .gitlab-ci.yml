@@ -110,7 +110,7 @@ freebsd:
 mac:
   tags: [macos]
   script:
-    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=3 -Dwerror=true
+    - meson setup build --wrap-mode=forcefallback -Dbuildtype=debug -Ddocs=disabled -Dwarning_level=everything -Dwerror=true
     - ninja -C build test
     - meson configure -Dbuildtype=release build
     - ninja -C build test
