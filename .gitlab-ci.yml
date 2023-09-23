@@ -18,7 +18,7 @@ dev:
     - meson configure -Dbuildtype=release -Db_coverage=false build
     - ninja -C build test
     - mkdir -p build/doc/man
-    - cp subprojects/serd/doc/mandoc.css build/doc/man/
+    - cp subprojects/serd/doc/man/mandoc.css build/doc/man/
     - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/sord/doc/sord_validate.1 > build/doc/man/sord_validate.html
     - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/sord/doc/sordi.1 > build/doc/man/sordi.html
     - mandoc -Thtml -Wwarning -O style=mandoc.css,man=%N.html subprojects/lilv/doc/lv2bench.1 > build/doc/man/lv2bench.html
