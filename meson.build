@@ -1,16 +1,19 @@
 # Copyright 2022-2023 David Robillard <d@drobilla.net>
 # SPDX-License-Identifier: 0BSD OR ISC
 
-project('lv2kit', ['c'],
-        version: '0.0.1',
-        license: 'ISC',
-        meson_version: '>= 0.56.0',
-        default_options: [
-          'b_ndebug=if-release',
-          'buildtype=release',
-          'c_std=c99',
-          'cpp_std=c++17',
-        ])
+project(
+  'lv2kit',
+  ['c'],
+  default_options: [
+    'b_ndebug=if-release',
+    'buildtype=release',
+    'c_std=c99',
+    'cpp_std=c++17',
+  ],
+  license: 'ISC',
+  meson_version: '>= 0.56.0',
+  version: '0.0.1',
+)
 
 lv2kit_src_root = meson.current_source_dir()
 versioned_name = 'lv2kit-' + meson.project_version().split('.')[0]
@@ -86,9 +89,9 @@ if not meson.is_subproject()
 
   summary(
     {
-      'Install prefix':  get_option('prefix'),
-      'Headers':  get_option('prefix') / get_option('includedir'),
-      'Libraries':  get_option('prefix') / get_option('libdir'),
+      'Install prefix': get_option('prefix'),
+      'Headers': get_option('prefix') / get_option('includedir'),
+      'Libraries': get_option('prefix') / get_option('libdir'),
       'Executables': get_option('prefix') / get_option('bindir'),
       'Man pages': get_option('prefix') / get_option('mandir'),
     },
