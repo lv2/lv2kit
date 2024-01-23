@@ -35,10 +35,10 @@ endif
 # Dependencies #
 ################
 
-zix_dep = dependency('zix-0', fallback: 'zix', version: '>= 0.4.0')
-serd_dep = dependency('serd-0', fallback: 'serd', version: '>= 0.30.17')
-sord_dep = dependency('sord-0', fallback: 'sord', version: '>= 0.16.15')
-lv2_dep = dependency('lv2', fallback: 'lv2', version: '>= 1.18.2')
+zix_dep = dependency('zix-0', fallback: 'zix', version: '>= 0.4.3')
+serd_dep = dependency('serd-0', fallback: 'serd', version: '>= 0.32.1')
+sord_dep = dependency('sord-0', fallback: 'sord', version: '>= 0.16.17')
+lv2_dep = dependency('lv2', fallback: 'lv2', version: '>= 1.18.11')
 
 ###############
 # Subprojects #
