@@ -1,4 +1,5 @@
 [
   { "ref":     "subprojects/sord/.includes.imp" },
+  { "ref":     "subprojects/suil/.includes.imp" },
   { "include": [ "<bits/struct_stat.h>", "private", "<sys/stat.h>", "public", ] }
 ]
