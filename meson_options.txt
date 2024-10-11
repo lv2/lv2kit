@@ -1,10 +1,10 @@
 # Copyright 2022-2023 David Robillard <d@drobilla.net>
 # SPDX-License-Identifier: 0BSD OR ISC
 
-option('cxx', type: 'boolean', value: true, yield: true,
+option('cxx', type: 'boolean', yield: true,
        description: 'Build C++ components')
 
-option('docs', type: 'feature', value: 'auto', yield: true,
+option('docs', type: 'feature', yield: true,
        description: 'Build documentation')
 
 option('lint', type: 'boolean', value: false, yield: true,
@@ -13,9 +13,9 @@ option('lint', type: 'boolean', value: false, yield: true,
 option('lv2dir', type: 'string', value: '', yield: true,
        description: 'LV2 bundle installation directory')
 
-option('tests', type: 'feature', value: 'auto', yield: true,
+option('tests', type: 'feature', yield: true,
        description: 'Build tests')
 
-option('tools', type: 'feature', value: 'auto', yield: true,
+option('tools', type: 'feature', yield: true,
        description: 'Build command line utilities')
 
