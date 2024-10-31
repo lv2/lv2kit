@@ -19,6 +19,6 @@
 [submodule "sord"]
 	path = subprojects/sord
 	url = ../../drobilla/sord.git
-[submodule "subprojects/zix"]
+[submodule "zix"]
 	path = subprojects/zix
 	url = ../../drobilla/zix.git
