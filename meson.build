@@ -31,23 +31,52 @@ if add_languages(['cpp'], native: false, required: get_option('cxx'))
   cpp = meson.get_compiler('cpp')
 endif
 
-################
-# Dependencies #
-################
+##############################
+# Dependencies / Subprojects #
+##############################
 
-zix_dep = dependency('zix-0', fallback: 'zix', version: '>= 0.6.0')
-serd_dep = dependency('serd-0', fallback: 'serd', version: '>= 0.32.4')
-sord_dep = dependency('sord-0', fallback: 'sord', version: '>= 0.16.18')
-lv2_dep = dependency('lv2', fallback: 'lv2', version: '>= 1.18.11')
-
-###############
-# Subprojects #
-###############
-
-sratom_dep = subproject('sratom').get_variable('sratom_dep')
-lilv_dep = subproject('lilv').get_variable('lilv_dep')
-suil_subproject = subproject('suil', default_options: ['cpp_std=c++17'])
-suil_dep = suil_subproject.get_variable('suil_dep')
+zix_dep = dependency(
+  'zix-0',
+  fallback: ['zix', 'zix_dep'],
+  include_type: 'system',
+  version: '>= 0.6.2',
+)
+serd_dep = dependency(
+  'serd-0',
+  fallback: ['serd', 'serd_dep'],
+  include_type: 'system',
+  version: '>= 0.32.4',
+)
+sord_dep = dependency(
+  'sord-0',
+  fallback: ['sord', 'sord_dep'],
+  include_type: 'system',
+  version: '>= 0.16.19',
+)
+lv2_dep = dependency(
+  'lv2',
+  fallback: ['lv2', 'lv2_dep'],
+  include_type: 'system',
+  version: '>= 1.18.11',
+)
+sratom_dep = dependency(
+  'sratom-0',
+  fallback: ['sratom', 'sratom_dep'],
+  include_type: 'system',
+  version: '>= 0.6.19',
+)
+lilv_dep = dependency(
+  'lilv-0',
+  fallback: ['lilv', 'lilv_dep'],
+  include_type: 'system',
+  version: '>= 0.24.27',
+)
+suil_dep = dependency(
+  'suil-0',
+  fallback: ['suil', 'suil_dep'],
+  include_type: 'system',
+  version: '>= 0.10.23',
+)
 
 ###########
 # Package #
