@@ -1,9 +1,5 @@
 {
   "version": "1.0.0",
-  "include_dirs": [
-    "subprojects/serd/include",
-    "subprojects/sratom/include"
-  ],
   "mapping_files": [
     ".includes.imp",
     "qt5_11.imp",
