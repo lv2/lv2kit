@@ -82,7 +82,7 @@ suil_dep = dependency(
 # Package #
 ###########
 
-# Generage pkg-config file for external dependants
+# Generate pkg-config file for external dependants
 pkg.generate(
   description: 'LV2 host libraries',
   filebase: versioned_name,
