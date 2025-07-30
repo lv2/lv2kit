@@ -37,44 +37,113 @@ endif
 # Dependencies / Subprojects #
 ##############################
 
+docs_option_string = 'auto'
+if get_option('docs').enabled()
+  docs_option_string = 'enabled'
+elif get_option('docs').disabled()
+  docs_option_string = 'disabled'
+endif
+
+tests_option_string = 'auto'
+if get_option('tests').enabled()
+  tests_option_string = 'enabled'
+elif get_option('tests').disabled()
+  tests_option_string = 'disabled'
+endif
+
+tools_option_string = 'auto'
+if get_option('tools').enabled()
+  tools_option_string = 'enabled'
+elif get_option('tools').disabled()
+  tools_option_string = 'disabled'
+endif
+
+cpp_option_string = 'auto'
+if not get_option('cxx')
+  cpp_option_string = 'disabled'
+endif
+
 zix_dep = dependency(
   'zix-0',
+  default_options: [
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+    'tests_cpp=' + cpp_option_string,
+  ],
   fallback: ['zix', 'zix_dep'],
   include_type: 'system',
   version: '>= 0.6.2',
 )
 serd_dep = dependency(
   'serd-0',
+  default_options: [
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+    'tools=' + tools_option_string,
+  ],
   fallback: ['serd', 'serd_dep'],
   include_type: 'system',
   version: '>= 0.32.4',
 )
 sord_dep = dependency(
   'sord-0',
+  default_options: [
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+    'tools=' + tools_option_string,
+  ],
   fallback: ['sord', 'sord_dep'],
   include_type: 'system',
   version: '>= 0.16.19',
 )
 lv2_dep = dependency(
   'lv2',
+  default_options: [
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'lv2dir=' + get_option('lv2dir'),
+    'tests=' + tests_option_string,
+  ],
   fallback: ['lv2', 'lv2_dep'],
   include_type: 'system',
   version: '>= 1.18.11',
 )
 sratom_dep = dependency(
   'sratom-0',
+  default_options: [
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+  ],
   fallback: ['sratom', 'sratom_dep'],
   include_type: 'system',
   version: '>= 0.6.19',
 )
 lilv_dep = dependency(
   'lilv-0',
+  default_options: [
+    'bindings_cpp=' + cpp_option_string,
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+    'tools=' + tools_option_string,
+  ],
   fallback: ['lilv', 'lilv_dep'],
   include_type: 'system',
   version: '>= 0.24.27',
 )
 suil_dep = dependency(
   'suil-0',
+  default_options: [
+    'qt5=' + cpp_option_string,
+    'qt6=' + cpp_option_string,
+    'docs=' + docs_option_string,
+    'lint=' + get_option('lint').to_string(),
+    'tests=' + tests_option_string,
+  ],
   fallback: ['suil', 'suil_dep'],
   include_type: 'system',
   version: '>= 0.10.23',
