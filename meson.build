@@ -73,7 +73,7 @@ zix_dep = dependency(
   ],
   fallback: ['zix', 'zix_dep'],
   include_type: 'system',
-  version: '>= 0.6.2',
+  version: '>= 0.8.0',
 )
 serd_dep = dependency(
   'serd-0',
@@ -85,7 +85,7 @@ serd_dep = dependency(
   ],
   fallback: ['serd', 'serd_dep'],
   include_type: 'system',
-  version: '>= 0.32.4',
+  version: '>= 0.32.6',
 )
 sord_dep = dependency(
   'sord-0',
@@ -97,7 +97,7 @@ sord_dep = dependency(
   ],
   fallback: ['sord', 'sord_dep'],
   include_type: 'system',
-  version: '>= 0.16.19',
+  version: '>= 0.16.20',
 )
 lv2_dep = dependency(
   'lv2',
@@ -120,7 +120,7 @@ sratom_dep = dependency(
   ],
   fallback: ['sratom', 'sratom_dep'],
   include_type: 'system',
-  version: '>= 0.6.19',
+  version: '>= 0.6.20',
 )
 lilv_dep = dependency(
   'lilv-0',
@@ -133,7 +133,7 @@ lilv_dep = dependency(
   ],
   fallback: ['lilv', 'lilv_dep'],
   include_type: 'system',
-  version: '>= 0.24.27',
+  version: '>= 0.26.0',
 )
 suil_dep = dependency(
   'suil-0',
@@ -146,7 +146,7 @@ suil_dep = dependency(
   ],
   fallback: ['suil', 'suil_dep'],
   include_type: 'system',
-  version: '>= 0.10.23',
+  version: '>= 0.10.24',
 )
 
 ###########
