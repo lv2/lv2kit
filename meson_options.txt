@@ -13,6 +13,9 @@ option('lint', type: 'boolean', value: false,
 option('lv2dir', type: 'string', value: '',
        description: 'LV2 bundle installation directory')
 
+option('plugins', type: 'feature',
+       description: 'Build example plugins')
+
 option('tests', type: 'feature',
        description: 'Build tests')
 

@@ -58,6 +58,13 @@ elif get_option('tools').disabled()
   tools_option_string = 'disabled'
 endif
 
+plugins_option_string = 'auto'
+if get_option('plugins').enabled()
+  plugins_option_string = 'enabled'
+elif get_option('plugins').disabled()
+  plugins_option_string = 'disabled'
+endif
+
 cpp_option_string = 'auto'
 if not get_option('cxx')
   cpp_option_string = 'disabled'
@@ -148,6 +155,19 @@ suil_dep = dependency(
   include_type: 'system',
   version: '>= 0.10.24',
 )
+
+if not get_option('plugins').disabled()
+  lv2_examples = subproject(
+    'lv2-examples',
+    default_options: [
+      'docs=' + docs_option_string,
+      'lint=' + get_option('lint').to_string(),
+      'lv2dir=' + get_option('lv2dir'),
+      'plugins=' + plugins_option_string,
+      'tests=' + tests_option_string,
+    ],
+  )
+endif
 
 ###########
 # Package #

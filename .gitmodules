@@ -22,3 +22,6 @@
 [submodule "zix"]
 	path = subprojects/zix
 	url = ../../drobilla/zix.git
+[submodule "subprojects/lv2-examples"]
+	path = subprojects/lv2-examples
+	url = ../lv2-examples.git
