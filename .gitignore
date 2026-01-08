@@ -5,6 +5,5 @@
 /build/
 /subprojects/.wraplock
 /subprojects/packagecache/
-/subprojects/sphinxygen-1.0.10/
+/subprojects/sphinxygen-1.0.12/
 /subprojects/sphinxygen.wrap
-/subprojects/sphinxygen/
