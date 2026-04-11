@@ -1,4 +1,4 @@
-# Copyright 2019-2023 David Robillard <d@drobilla.net>
+# Copyright 2019-2026 David Robillard <d@drobilla.net>
 # SPDX-License-Identifier: 0BSD OR ISC
 
 [submodule "serd"]
@@ -22,6 +22,6 @@
 [submodule "zix"]
 	path = subprojects/zix
 	url = ../../drobilla/zix.git
-[submodule "subprojects/lv2-examples"]
+[submodule "lv2-examples"]
 	path = subprojects/lv2-examples
 	url = ../lv2-examples.git
