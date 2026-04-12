@@ -172,6 +172,7 @@ if not get_option('plugins').disabled()
     ],
     fallback: ['pugl', 'pugl_dep'],
     include_type: 'system',
+    required: false,
     version: '>= 0.5.7',
   )
 
