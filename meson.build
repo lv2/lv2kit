@@ -157,6 +157,24 @@ suil_dep = dependency(
 )
 
 if not get_option('plugins').disabled()
+  pugl_dep = dependency(
+    'pugl-0',
+    default_options: [
+      'default_library=static',
+      'bindings_cpp=disabled',
+      'cairo=enabled',
+      'docs=disabled',
+      'examples=disabled',
+      'opengl=disabled',
+      'stub=false',
+      'tests=disabled',
+      'vulkan=disabled',
+    ],
+    fallback: ['pugl', 'pugl_dep'],
+    include_type: 'system',
+    version: '>= 0.5.7',
+  )
+
   lv2_examples = subproject(
     'lv2-examples',
     default_options: [
@@ -178,7 +196,7 @@ pkg.generate(
   description: 'LV2 host libraries',
   filebase: versioned_name,
   name: 'LV2Kit',
-  requires: ['zix-0', 'serd-0', 'sord-0', 'lv2', 'sratom-0', 'lilv-0', 'suil-0'],
+  requires: ['zix-0', 'serd-0', 'sord-0', 'lv2', 'sratom-0', 'lilv-0'],
   subdirs: [versioned_name],
   version: meson.project_version(),
 )
@@ -192,6 +210,7 @@ lv2kit_dep = declare_dependency(
     lv2_dep,
     sratom_dep,
     lilv_dep,
+    pugl_dep,
     suil_dep,
   ],
 )
